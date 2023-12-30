@@ -41,7 +41,7 @@ class Anasayfa: UIViewController {
 
 }
 
-extension Anasayfa : UITableViewDelegate,UITableViewDataSource{
+extension Anasayfa : UITableViewDelegate,UITableViewDataSource,HucreProtokol{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return urunlerListesi.count
@@ -60,6 +60,9 @@ extension Anasayfa : UITableViewDelegate,UITableViewDataSource{
         hucre.hucreArkaplan.layer.cornerRadius = 10
         
         hucre.selectionStyle = .none
+        
+        hucre.hucreProtokol = self
+        hucre.indexPath = indexPath
         
         
         return hucre
@@ -97,6 +100,11 @@ extension Anasayfa : UITableViewDelegate,UITableViewDataSource{
                 gidilecekVC.urunler = urun
             }
         }
+    }
+    
+    func sepeteEkleTiklandi(indexPath: IndexPath) {
+        let urun = urunlerListesi[indexPath.row]
+        print("\(urun.ad!) sepete gönderildi.")
     }
 }
 
