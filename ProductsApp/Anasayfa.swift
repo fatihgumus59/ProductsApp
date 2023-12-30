@@ -59,8 +59,44 @@ extension Anasayfa : UITableViewDelegate,UITableViewDataSource{
         hucre.backgroundColor = UIColor(white: 0.95, alpha: 1)
         hucre.hucreArkaplan.layer.cornerRadius = 10
         
+        hucre.selectionStyle = .none
+        
         
         return hucre
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let urun = urunlerListesi[indexPath.row]
+        
+        let silAction = UIContextualAction(style: .destructive, title: "Sil"){
+            contectualAction,view,bool in
+            
+            print("\(urun.ad!) silindi")
+        }
+        
+        let duzenleAction = UIContextualAction(style: .normal, title: "Düzenle"){
+            contectualAction,view,bool in
+            
+            print("\(urun.ad!) düzenlendi")
+        }
+        
+        return UISwipeActionsConfiguration(actions: [silAction,duzenleAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let urun = urunlerListesi[indexPath.row]
+        performSegue(withIdentifier: "toDetay", sender: urun)
+                
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetay"{
+            if let urun = sender as? Urunler{
+               
+                let gidilecekVC = segue.destination as! DetaySayfa
+                gidilecekVC.urunler = urun
+            }
+        }
     }
 }
 
