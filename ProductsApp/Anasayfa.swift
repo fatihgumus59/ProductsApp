@@ -52,9 +52,16 @@ extension Anasayfa : UITableViewDelegate,UITableViewDataSource,HucreProtokol{
         
         let hucre = tableView.dequeueReusableCell(withIdentifier: "urunlerHucre") as! UrunlerHucre
         
+        // source : https://stackoverflow.com/questions/48984009/how-to-get-the-currency-formatter-with-decimal-and-grouping-separator-in-swift-u
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currencyAccounting
+        formatter.locale = Locale(identifier: "TR")
+        formatter.currencyCode = "TRY"
+        //********************************************
+        
         hucre.urunResim.image = UIImage(named: urun.resim!)
         hucre.urunAdLabel.text = urun.ad
-        hucre.urunFiyatLabel.text = "\(urun.fiyat!) ₺"
+        hucre.urunFiyatLabel.text = formatter.string(from: urun.fiyat! as NSNumber)
         
         hucre.backgroundColor = UIColor(white: 0.95, alpha: 1)
         hucre.hucreArkaplan.layer.cornerRadius = 10
